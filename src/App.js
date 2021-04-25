@@ -16,13 +16,13 @@ import { Cryptocurrencies } from "./store/CryptocurrenciesStore.js";
 const Row = React.memo(({ item }) => (
   <ListItem thumbnail>
     <Left>
-      <Thumbnail source={{ uri: item.image.large }} />
+      <Thumbnail source={{ uri: item.image }} />
     </Left>
     <Body>
       <Text style={{ fontWeight: "bold", marginBottom: 10, fontSize: 18 }}>
         {item.name}
       </Text>
-      <Text>{item.market_data.current_price.usd + "$"}</Text>
+      <Text>{item.current_price + "$"}</Text>
     </Body>
   </ListItem>
 ));
@@ -35,9 +35,6 @@ const App = observer(() => {
   const Data = Cryptocurrencies.CoinsList;
 
   if (!Data.length) {
-    Cryptocurrencies.LoadNames();
-  }
-  if (!Data.length && Cryptocurrencies.Names.length) {
     Cryptocurrencies.LoadMore();
   }
 
