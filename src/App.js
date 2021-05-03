@@ -13,42 +13,44 @@ import {
 import React from "react";
 import { Cryptocurrencies } from "./store/CryptocurrenciesStore.js";
 
-const Row = React.memo(({ item }) => (
+const Row = React.memo(({ coin }) => (
   <ListItem thumbnail>
     <Left>
-      <Thumbnail source={{ uri: item.image }} />
+      <Thumbnail source={{ uri: coin.image }} />
     </Left>
     <Body>
       <Text style={{ fontWeight: "bold", marginBottom: 10, fontSize: 18 }}>
-        {item.name}
+        {coin.name}
       </Text>
-      <Text>{item.current_price + "$"}</Text>
+      <Text>{coin.current_price + "$"}</Text>
     </Body>
   </ListItem>
 ));
 
-const RenderRow = ({ item }) => {
-  return <Row item={item} />;
+const renderRow = ({ item }) => {
+  return <Row coin={item} />;
 };
 
 const App = observer(() => {
-  const Data = Cryptocurrencies.CoinsList;
+  const CoinsList = Cryptocurrencies.CoinsList;
 
-  if (!Data.length) {
-    Cryptocurrencies.LoadMore();
+  if (!CoinsList.length) {
+    Cryptocurrencies.loadMoreCoins();
   }
 
   return (
     <Container>
       <Header />
-      {Data.length ? (
+      {CoinsList.length ? (
         <List
-          dataArray={Data}
+          dataArray={CoinsList}
           keyExtractor={(item) => item.id}
-          renderItem={RenderRow}
-          ListFooterComponent={Cryptocurrencies.AllLoaded ? null : <Spinner />}
+          renderItem={renderRow}
+          ListFooterComponent={
+            Cryptocurrencies.allCoinsLoaded ? null : <Spinner />
+          }
           onEndReachedThreshold="0.1"
-          onEndReached={() => Cryptocurrencies.LoadMore()}
+          onEndReached={() => Cryptocurrencies.loadMoreCoins()}
         />
       ) : (
         <Spinner />
