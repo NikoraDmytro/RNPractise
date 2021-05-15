@@ -2,7 +2,7 @@ const { makeAutoObservable, flow } = require("mobx");
 
 const LOAD_PER_FETCH = 10;
 
-class CryptocurrenciesStore {
+class Cryptocurrencies {
   constructor() {
     this.CoinsList = [];
     this.loadMoreCoins = this.loadMoreCoins.bind(this);
@@ -35,4 +35,4 @@ class CryptocurrenciesStore {
   });
 }
 
-export const Cryptocurrencies = new CryptocurrenciesStore();
+export const CryptocurrenciesStore = new Cryptocurrencies();
