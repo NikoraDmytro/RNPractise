@@ -1,5 +1,6 @@
 import { observer } from "mobx-react";
-import { Container, Header, List, Spinner } from "native-base";
+import { Container, List, Spinner } from "native-base";
+import { DefaultHeader } from "../../components/DefaultHeader.js";
 import React from "react";
 import { CryptocurrenciesStore } from "../../store/CryptocurrenciesStore";
 import { renderListRow } from "./components/renderListRow";
@@ -14,7 +15,7 @@ export const Cryptocurrencies = observer(() => {
 
   return (
     <Container>
-      <Header />
+      <DefaultHeader title="Cryptocurrencies" />
       {CoinsList.length ? (
         <List
           dataArray={CoinsList}
