@@ -4,16 +4,16 @@ import { v4 as uuidv4 } from "uuid";
 
 class TodoList {
   constructor() {
-    this.ToDoList = [
+    this.TodoList = [
       { name: "Start running every day!", id: uuidv4() },
       { name: "Do the physics!", id: uuidv4() },
     ];
     makeAutoObservable(this);
   }
 
-  addNewTodo(toDo) {
-    this.ToDoList = [...this.ToDoList, { name: toDo, id: uuidv4() }];
+  addNewTodo(todo) {
+    this.TodoList = [...this.TodoList, { name: todo, id: uuidv4() }];
   }
 }
 
-export const ToDoStore = new TodoList();
+export const TodoStore = new TodoList();

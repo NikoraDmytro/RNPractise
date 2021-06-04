@@ -1,34 +1,43 @@
-import React from "react";
-import { Button, H1, Text } from "native-base";
-import { Modal } from "react-native";
-import styled from "styled-components/native";
-
-const ModalView = styled.View`
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 30px;
-  padding: 50px 100px;
-  align-items: center;
-`;
-
-const ModalContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background: rgba(63, 78, 117, 0.5);
-`;
+import React, { useState } from "react";
+import { Button, Icon, Input, Item, H2, Text } from "native-base";
+import { Modal, View } from "react-native";
+import { ModalContainer, ModalView } from "./styles";
 
 export const AddTodoModal = (props) => {
   const closeModal = props.close;
   const visible = props.visible;
+  const addTodo = props.add;
+  const [todo, setTodo] = useState("");
 
   return (
     <Modal animationType="fade" transparent={true} visible={visible}>
       <ModalContainer>
         <ModalView>
-          <H1>HELLO</H1>
-          <Button color="red" onPress={closeModal}>
-            <Text>Close Modal</Text>
+          <View
+            style={{
+              marginBottom: 20,
+              justifyContent: "center",
+            }}
+          >
+            <H2>Add New Todo</H2>
+            <Button
+              onPress={closeModal}
+              transparent
+              style={{ position: "absolute", right: 0 }}
+            >
+              <Icon name="close" style={{ fontSize: 32 }} />
+            </Button>
+          </View>
+
+          <Item regular style={{ marginBottom: 15, width: 85 + "%" }}>
+            <Input
+              placeholder="Go jogging"
+              onChangeText={(todo) => setTodo(todo)}
+            />
+          </Item>
+
+          <Button onPress={() => addTodo(todo)} rounded>
+            <Text>Done</Text>
           </Button>
         </ModalView>
       </ModalContainer>

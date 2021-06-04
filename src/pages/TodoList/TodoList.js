@@ -9,13 +9,13 @@ import {
   Footer,
   FooterTab,
 } from "native-base";
-import { ToDoStore } from "../../store/ToDoStore.js";
+import { TodoStore } from "../../store/TodoStore.js";
 import { observer } from "mobx-react";
 import { AddTodoModal } from "./components/AddTodoModal.js";
 
 export const TodoList = observer(() => {
-  const Store = ToDoStore;
-  const ToDoList = Store.ToDoList;
+  const Store = TodoStore;
+  const TodoList = Store.TodoList;
   const [modalVisible, setModalVisible] = useState(false);
 
   const renderItem = ({ item }) => (
@@ -26,20 +26,24 @@ export const TodoList = observer(() => {
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
+  const addTodo = (todo) => {
+    Store.addNewTodo(todo);
+    setModalVisible(false);
+  };
 
   return (
     <Container>
       <DefaultHeader title="TODO list" />
-      <AddTodoModal visible={modalVisible} close={closeModal} />
+      <AddTodoModal visible={modalVisible} close={closeModal} add={addTodo} />
       <List
-        dataArray={ToDoList}
+        dataArray={TodoList}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
       <Footer>
         <FooterTab>
           <Button onPress={openModal} active full>
-            <Text>Add TODO</Text>
+            <Text>Add todo</Text>
           </Button>
         </FooterTab>
       </Footer>
