@@ -14,3 +14,10 @@ export const ModalContainer = styled.View`
   align-items: center;
   background: rgba(63, 78, 117, 0.5);
 `;
+
+export const HiddenView = styled.View`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 20px;
+`;

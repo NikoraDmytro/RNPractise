@@ -12,6 +12,7 @@ class TodoList {
   }
 
   addNewTodo(todo) {
+    if (!todo.length) return;
     this.TodoList = [...this.TodoList, { name: todo, id: uuidv4() }];
   }
 }

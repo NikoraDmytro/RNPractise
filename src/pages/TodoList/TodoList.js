@@ -1,28 +1,15 @@
 import React, { useState } from "react";
 import { DefaultHeader } from "../../components/DefaultHeader.js";
-import {
-  Container,
-  Text,
-  List,
-  ListItem,
-  Button,
-  Footer,
-  FooterTab,
-} from "native-base";
+import { Container, Text, List, Button, Footer, FooterTab } from "native-base";
 import { TodoStore } from "../../store/TodoStore.js";
 import { observer } from "mobx-react";
 import { AddTodoModal } from "./components/AddTodoModal.js";
+import { renderTodo } from "./components/renderTodo.js";
 
 export const TodoList = observer(() => {
   const Store = TodoStore;
   const TodoList = Store.TodoList;
   const [modalVisible, setModalVisible] = useState(false);
-
-  const renderItem = ({ item }) => (
-    <ListItem>
-      <Text>{item.name}</Text>
-    </ListItem>
-  );
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
@@ -37,7 +24,7 @@ export const TodoList = observer(() => {
       <AddTodoModal visible={modalVisible} close={closeModal} add={addTodo} />
       <List
         dataArray={TodoList}
-        renderItem={renderItem}
+        renderItem={renderTodo}
         keyExtractor={(item) => item.id}
       />
       <Footer>
