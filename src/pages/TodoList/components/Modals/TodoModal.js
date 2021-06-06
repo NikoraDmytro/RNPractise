@@ -1,13 +1,11 @@
-import React, { useState } from "react";
-import { Button, Icon, Input, Item, H2, Text } from "native-base";
+import React from "react";
+import { Button, Icon, H2 } from "native-base";
 import { Modal, View } from "react-native";
-import { ModalContainer, ModalView } from "./styles";
+import { ModalContainer, ModalView } from "../styles";
 
-export const AddTodoModal = (props) => {
+export const TodoModal = (props) => {
   const closeModal = props.close;
   const visible = props.visible;
-  const addTodo = props.add;
-  const [todo, setTodo] = useState("");
 
   return (
     <Modal animationType="fade" transparent={true} visible={visible}>
@@ -19,7 +17,7 @@ export const AddTodoModal = (props) => {
               justifyContent: "center",
             }}
           >
-            <H2>Add New Todo</H2>
+            <H2>{props.title}</H2>
             <Button
               onPress={closeModal}
               transparent
@@ -28,17 +26,7 @@ export const AddTodoModal = (props) => {
               <Icon name="close" style={{ fontSize: 32 }} />
             </Button>
           </View>
-
-          <Item regular style={{ marginBottom: 15, width: 85 + "%" }}>
-            <Input
-              placeholder="Go jogging"
-              onChangeText={(todo) => setTodo(todo)}
-            />
-          </Item>
-
-          <Button onPress={() => addTodo(todo)} rounded>
-            <Text>Done</Text>
-          </Button>
+          {props.children}
         </ModalView>
       </ModalContainer>
     </Modal>

@@ -15,6 +15,19 @@ class TodoList {
     if (!todo.length) return;
     this.TodoList = [...this.TodoList, { name: todo, id: uuidv4() }];
   }
+
+  deleteTodo(id) {
+    const NewState = this.TodoList.filter((todo) => todo.id != id);
+    this.TodoList = [...NewState];
+  }
+
+  editTodo(name, id) {
+    const NewState = this.TodoList.map((todo) => {
+      if (todo.id == id) todo.name = name;
+      return todo;
+    });
+    this.TodoList = [...NewState];
+  }
 }
 
 export const TodoStore = new TodoList();

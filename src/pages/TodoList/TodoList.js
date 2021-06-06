@@ -3,8 +3,8 @@ import { DefaultHeader } from "../../components/DefaultHeader.js";
 import { Container, Text, List, Button, Footer, FooterTab } from "native-base";
 import { TodoStore } from "../../store/TodoStore.js";
 import { observer } from "mobx-react";
-import { AddTodoModal } from "./components/AddTodoModal.js";
-import { renderTodo } from "./components/renderTodo.js";
+import { AddTodoModal } from "./components/Modals/AddTodoModal.js";
+import { Todo } from "./components/Todo/Todo.js";
 
 export const TodoList = observer(() => {
   const Store = TodoStore;
@@ -17,6 +17,8 @@ export const TodoList = observer(() => {
     Store.addNewTodo(todo);
     setModalVisible(false);
   };
+
+  const renderTodo = ({ item }) => <Todo item={item} />;
 
   return (
     <Container>
