@@ -5,6 +5,7 @@ import { DefaultHeader } from "../../components/DefaultHeader";
 import useComicInfo from "./utils/hooks/useComicInfo";
 import getRandomComicNumber from "./utils/functions/getRandomComicNumber";
 import { DefaultLoading } from "../../components/DefaultLoading";
+import { ButtonsStack } from "./components/ButtonsStack.js";
 
 export const Comic = () => {
   const [comicNumber, setComicNumber] = useState(getRandomComicNumber());
@@ -22,15 +23,25 @@ export const Comic = () => {
         padder
         contentContainerStyle={{
           alignItems: "center",
+          marginLeft: 5,
+          marginRight: 5,
         }}
       >
         <H1>{comicInfo.title}</H1>
+        <ButtonsStack
+          comicNumber={comicNumber}
+          setComicNumber={setComicNumber}
+        />
         <Image
           source={{ uri: comicInfo.img }}
           style={{
             width: width,
             height: height,
           }}
+        />
+        <ButtonsStack
+          comicNumber={comicNumber}
+          setComicNumber={setComicNumber}
         />
       </Content>
     </Container>
