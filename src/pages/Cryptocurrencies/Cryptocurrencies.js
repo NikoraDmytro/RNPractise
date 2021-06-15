@@ -4,6 +4,7 @@ import { DefaultHeader } from "../../components/DefaultHeader.js";
 import React from "react";
 import { CryptocurrenciesStore } from "../../store/CryptocurrenciesStore";
 import { renderListRow } from "./components/renderListRow";
+import { DefaultLoading } from "../../components/DefaultLoading.js";
 
 export const Cryptocurrencies = observer(() => {
   const Store = CryptocurrenciesStore;
@@ -11,23 +12,20 @@ export const Cryptocurrencies = observer(() => {
 
   if (!CoinsList.length) {
     Store.loadMoreCoins();
+    return <DefaultLoading title="Cryptocurrencies" />;
   }
 
   return (
     <Container>
       <DefaultHeader title="Cryptocurrencies" />
-      {CoinsList.length ? (
-        <List
-          dataArray={CoinsList}
-          keyExtractor={(item) => item.id}
-          renderItem={renderListRow}
-          ListFooterComponent={Store.allCoinsLoaded ? null : <Spinner />}
-          onEndReachedThreshold="0.1"
-          onEndReached={() => Store.loadMoreCoins()}
-        />
-      ) : (
-        <Spinner />
-      )}
+      <List
+        dataArray={CoinsList}
+        keyExtractor={(item) => item.id}
+        renderItem={renderListRow}
+        ListFooterComponent={Store.allCoinsLoaded ? null : <Spinner />}
+        onEndReachedThreshold="0.1"
+        onEndReached={() => Store.loadMoreCoins()}
+      />
     </Container>
   );
 });
