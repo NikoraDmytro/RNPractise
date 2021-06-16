@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { Image, Dimensions } from "react-native";
-import { Container, Content, H1 } from "native-base";
+import React, { useRef, useState } from "react";
+import { Dimensions, View, Image } from "react-native";
+import { Container, Content, H1, Spinner } from "native-base";
 import { DefaultHeader } from "../../components/DefaultHeader";
 import useComicInfo from "./utils/hooks/useComicInfo";
 import getRandomComicNumber from "./utils/functions/getRandomComicNumber";
 import { DefaultLoading } from "../../components/DefaultLoading";
 import { ButtonsStack } from "./components/ButtonsStack.js";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 export const Comic = () => {
   const [comicNumber, setComicNumber] = useState(getRandomComicNumber());
   const comicInfo = useComicInfo(comicNumber);
+  const swipeable = useRef();
 
   if (!comicInfo) return <DefaultLoading title="Comic" />;
 
@@ -32,13 +34,33 @@ export const Comic = () => {
           comicNumber={comicNumber}
           setComicNumber={setComicNumber}
         />
-        <Image
-          source={{ uri: comicInfo.img }}
-          style={{
-            width: width,
-            height: height,
-          }}
-        />
+
+        {comicNumber == comicInfo.num ? (
+          <Swipeable
+            ref={swipeable}
+            onSwipeableLeftOpen={() => {
+              swipeable.current.close();
+              setComicNumber(comicNumber - 1);
+            }}
+            onSwipeableRightOpen={() => {
+              swipeable.current.close();
+              setComicNumber(comicNumber + 1);
+            }}
+            renderRightActions={() => <View style={{ flex: 1 }}></View>}
+            renderLeftActions={() => <View style={{ flex: 1 }}></View>}
+          >
+            <Image
+              source={{ uri: comicInfo.img }}
+              style={{
+                width: width,
+                height: height,
+              }}
+            />
+          </Swipeable>
+        ) : (
+          <Spinner />
+        )}
+
         <ButtonsStack
           comicNumber={comicNumber}
           setComicNumber={setComicNumber}
