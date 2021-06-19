@@ -26,29 +26,41 @@ export const ButtonsStack = ({ comicNumber, setComicNumber }) => {
   };
 
   const StackButton = (props) => (
-    <Button small style={{ marginRight: 5 }} {...props}>
+    <Button small style={{ marginRight: 5, padding: 2 }} {...props}>
       {props.children}
     </Button>
+  );
+
+  const SmallIcon = (props) => (
+    <Icon
+      {...props}
+      type="AntDesign"
+      style={{ fontSize: 20, marginLeft: 0, marginRight: 0 }}
+    />
+  );
+
+  const SmallText = (props) => (
+    <Text style={{ fontSize: 14 }}>{props.children}</Text>
   );
 
   return (
     <View style={{ margin: 10, flexDirection: "row" }}>
       <StackButton onPress={firstComic} icon>
-        <Icon name="verticleright" type="AntDesign" />
+        <SmallIcon name="verticleright" />
       </StackButton>
       <StackButton onPress={previousComic} iconLeft>
-        <Icon name="left" type="AntDesign" />
-        <Text>Prev</Text>
+        <SmallIcon name="left" />
+        <SmallText>Prev</SmallText>
       </StackButton>
       <StackButton onPress={randomComic}>
-        <Text>Random</Text>
+        <SmallText>Random</SmallText>
       </StackButton>
       <StackButton onPress={nextComic} iconRight>
-        <Text>Next</Text>
-        <Icon name="right" type="AntDesign" />
+        <SmallText>Next</SmallText>
+        <SmallIcon name="right" />
       </StackButton>
       <StackButton onPress={lastComic} icon>
-        <Icon name="verticleleft" type="AntDesign" />
+        <SmallIcon name="verticleleft" />
       </StackButton>
     </View>
   );
