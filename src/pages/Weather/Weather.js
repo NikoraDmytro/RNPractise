@@ -1,35 +1,30 @@
-import { Container, Content, Text } from "native-base";
-import React, { useEffect, useState } from "react";
+import { Container, Text, List, ListItem } from "native-base";
+import React from "react";
 import { DefaultHeader } from "../../components/DefaultHeader";
 import { DefaultLoading } from "../../components/DefaultLoading";
-import { getDeviceGeolocation } from "./utils/functions/getDeviceGeolocation";
+import { useWeather } from "./utils/hooks/useWeather";
 
 export const Weather = () => {
-  const [deviceGeolocation, setDeviceGeolocation] = useState();
+  const weatherForecast = useWeather();
 
-  useEffect(() => {
-    const getGeolocation = async () => {
-      const location = await getDeviceGeolocation();
+  const renderWeatherForecast = ({ item }) => {
+    return (
+      <ListItem>
+        <Text>{item.weather}</Text>
+      </ListItem>
+    );
+  };
 
-      setDeviceGeolocation(location);
-    };
-
-    if (!deviceGeolocation) {
-      getGeolocation();
-    }
-  });
-
-  if (!deviceGeolocation) return <DefaultLoading title="Weather" />;
-  console.log(deviceGeolocation);
+  if (!weatherForecast) return <DefaultLoading title="Weather" />;
 
   return (
     <Container>
       <DefaultHeader />
-      <Content padder>
-        <Text>TODO LATER!</Text>
-        <Text>{deviceGeolocation.latitude}</Text>
-        <Text>{deviceGeolocation.longitude}</Text>
-      </Content>
+      <List
+        dataArray={weatherForecast.dataseries}
+        renderItem={renderWeatherForecast}
+        keyExtractor={(item) => item.timepoint}
+      />
     </Container>
   );
 };
