@@ -3,27 +3,30 @@ import React from "react";
 import { DefaultHeader } from "../../components/DefaultHeader";
 import { DefaultLoading } from "../../components/DefaultLoading";
 import { useWeather } from "./utils/hooks/useWeather";
+import { organizeWeatherForecast } from "./utils/functions/organizeWeatherForecast.js";
 
 export const Weather = () => {
-  const weatherForecast = useWeather();
+  const data = useWeather();
+
+  if (!data) return <DefaultLoading title="Weather" />;
 
   const renderWeatherForecast = ({ item }) => {
     return (
       <ListItem>
-        <Text>{item.weather}</Text>
+        <Text>{item[0].weather}</Text>
       </ListItem>
     );
   };
 
-  if (!weatherForecast) return <DefaultLoading title="Weather" />;
+  const WeatherForecast = organizeWeatherForecast(data);
 
   return (
     <Container>
       <DefaultHeader />
       <List
-        dataArray={weatherForecast.dataseries}
+        dataArray={WeatherForecast}
         renderItem={renderWeatherForecast}
-        keyExtractor={(item) => item.timepoint}
+        keyExtractor={(item) => item[0].timepoint}
       />
     </Container>
   );
