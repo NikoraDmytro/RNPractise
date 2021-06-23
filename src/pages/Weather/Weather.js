@@ -1,22 +1,19 @@
-import { Container, Text, List, ListItem } from "native-base";
+import { Container, List } from "native-base";
 import React from "react";
 import { DefaultHeader } from "../../components/DefaultHeader";
 import { DefaultLoading } from "../../components/DefaultLoading";
 import { useWeather } from "./utils/hooks/useWeather";
 import { organizeWeatherForecast } from "./utils/functions/organizeWeatherForecast.js";
+import { OneDayWeatherForecast } from "./components/WeatherForecast";
 
 export const Weather = () => {
   const data = useWeather();
 
   if (!data) return <DefaultLoading title="Weather" />;
 
-  const renderWeatherForecast = ({ item }) => {
-    return (
-      <ListItem>
-        <Text>{item[0].weather}</Text>
-      </ListItem>
-    );
-  };
+  const renderWeatherForecast = ({ item, index }) => (
+    <OneDayWeatherForecast weatherForecast={item} day={index} />
+  );
 
   const WeatherForecast = organizeWeatherForecast(data);
 
